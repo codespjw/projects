@@ -1,0 +1,39 @@
+syntax = "proto3";
+package pnc.control;
+import "control_common.proto";
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message Odometry {
+    optional TimeMetricHeader time_header = 1;
+    optional double x = 2; //确定一下定位坐标系 x,y,z 是否后轴中心
+    optional double y = 3;
+    optional double z = 4;
+    optional double yaw = 5; // yaw pitch roll 顺序
+    optional double pitch = 6;
+    optional double roll = 7; 
+    optional double vx = 8;
+    optional double vy = 9;
+    optional double vz = 10;
+    optional double omega_x = 11;
+    optional double omega_y = 12;
+    optional double omega_z = 13;
+    // ax, ay, az : 自车坐标系 还是 全局坐标系？
+    optional double ax = 14;
+    optional double ay = 15;
+    optional double az = 16;
+
+    optional double speed = 17; //  Speed(m/s), no raw speed, Calculate by multiplying chassis speed with speed scale or by calculating through wheel speed pulse
+    optional uint64 time_stamp = 18;
+    optional uint32 source = 19; // Calculate source
+    
+    optional double wheel_angle = 20;
+}
+
+// control_common
+// localization
+// function_statemachine
+// planning_trajectory
+// vehicle_service_info

@@ -1,0 +1,27 @@
+syntax = "proto3";
+package pnc.control;
+import "control_common.proto";
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+enum PlanningAndControlState {
+    PNC_STATE_OFF = 0;
+    PNC_STATE_IDLE = 1;
+    PNC_STATE_ACC_STANDBY = 2;
+    PNC_STATE_ICA_STANDBY = 3;
+    PNC_STATE_NOA_STANDBY = 4;
+    PNC_STATE_ACC_ACTIVE = 5;
+    PNC_STATE_ICA_ACTIVE = 6;
+    PNC_STATE_NOA_ACTIVE = 7;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message PncState {
+    optional Header header = 1;
+    optional PlanningAndControlState state = 2;
+}

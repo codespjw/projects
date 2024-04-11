@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package pnc.control;
+import "control_common.proto";
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+
+message PlanningPoint {
+  optional double x = 1;
+  optional double z = 2;
+  optional double y = 3;
+  optional double yaw = 4;
+  optional double pitch = 5;
+  optional double roll = 6;
+  optional double s = 7;
+  optional double l = 8;
+  optional double k = 9;
+  optional double dk_ds = 10;
+  optional double dl_ds = 11;
+  optional double ddl_ds2 = 12;
+  optional double ds_dt = 13;
+  optional double dds_dt2 = 14;
+  optional double speed = 15;
+  optional double acc = 16;
+  optional double jerk = 17;
+  optional double speed_limit = 18;
+  optional double gear = 19;
+  optional double steer = 20;
+  optional double steer_rate = 21;
+  optional double left_bound_l = 22;
+  optional double right_bound_l = 23;
+  repeated double disc_x_set = 24;
+  repeated double disc_y_set = 25;
+  optional bool has_collision = 26;
+  optional uint64 time = 27;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+enum CornerLamp {
+  CORNER_LAMP_NONE = 0;
+  CORNER_LAMP_LEFT = 1;
+  CORNER_LAMP_RIGHT = 2;
+  CORNER_LAMP_DOUBLE = 3;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+enum SoundType {
+  SOUND_TYPE_NONE = 0;
+  SOUND_TYPE_TAKEOVER = 1;
+  SOUND_TYPE_RIGHT = 2;
+  SOUND_TYPE_MODESWITCH = 3;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message InteractiveControl {
+  optional CornerLamp corner_lamp = 1;
+  optional bool high_beam = 2;
+  optional bool low_beam = 3;
+  optional bool horn = 4;
+  optional uint32 wipe = 5;
+  optional SoundType sound_type = 6;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+enum LongPlanningState {
+  LONG_PLANNING_STATE_INITIAL = 0;
+  LONG_PLANNING_STATE_STOP = 1;
+  LONG_PLANNING_STATE_START = 2;
+  LONG_PLANNING_STATE_EMERGENCY = 15;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message Trajectory {
+  optional Header header = 1;
+  optional TimeMetricHeader time_header = 2;
+  repeated PlanningPoint trajectory  = 3;
+  repeated PlanningPoint path = 4;
+  optional InteractiveControl interactive_control = 5;
+  optional double set_speed = 6;
+  optional uint32 method = 7;                              // PlanningMethod
+  optional LongPlanningState long_planning_state = 8;                           
+  optional uint64 pose_stamp = 9;
+  optional PosePoint odom_pose = 10;
+}

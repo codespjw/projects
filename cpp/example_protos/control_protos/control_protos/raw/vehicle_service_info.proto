@@ -1,0 +1,241 @@
+syntax = "proto3";
+package pnc.control;
+import "control_common.proto";
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message VecSpeed {
+    optional double vehicle_speed = 1;
+    optional uint32 time_stamp = 2;
+    optional bool vehicle_speed_valid = 3;
+    repeated int32 wheel_pulse = 4;
+    repeated bool wheel_pulse_valid = 5;
+    repeated double wheel_speed = 6;
+    repeated bool wheel_speed_valid = 7;
+    repeated int32 wheel_pulse_direction = 8;
+    repeated bool wheel_pulse_direction_valid = 9;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message SteeringWheel {
+    optional bool steering_wheel_valid = 1;
+    optional double steering_wheel_in_deg = 2;
+    optional double steering_wheel_in_rad = 3;
+    optional double steering_tire_in_rad = 4;
+    optional double  steering_wheel_spd = 5;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message SteeringTorque {
+    optional bool steering_torque_valid = 1;
+    optional double steering_torque = 2;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message GearInfo {
+    enum GearPosition {
+        GEAR_POSITION_UNKNOWN = 0;
+        GEAR_POSITION_PARKING = 1;
+        GEAR_POSITION_REVERSE = 2;
+        GEAR_POSITION_NEUTRAL = 3;
+        GEAR_POSITION_DRIVE = 4;
+    }
+    optional bool gear_valid = 1;
+    optional GearPosition gear_position = 2;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message InertialInfo {
+    optional bool yaw_rate_valid = 1;
+    optional double yaw_rate = 2;
+    optional bool longitudinal_acc_valid = 3;
+    optional double longitudinal_acc = 4;
+    optional bool lateral_acc_valid = 5;
+    optional double lateral_acc = 6;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message LampInfo {
+    optional bool left_light_status = 1;
+    optional bool right_light_status = 2;
+    optional bool brake_light_status = 3;
+    optional bool high_beam_status = 4;
+    optional bool low_beam_status = 5;
+    optional bool emergency_light_status = 6;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message EngineInfo {
+    optional double engine_torque = 1;
+    optional double engine_speed = 2;
+    optional int32 engine_status = 3;
+    optional double engine_toruqe_act_max = 4;
+    optional double engine_toruqe_act_min = 5;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message AutodriveStatusInfo {
+    enum LateralAutodriveMode{
+        LATERAL_AUTODRIVE_MODE_UNKNOWN = 0;
+        LATERAL_AUTODRIVE_MODE_MANUAL = 1;
+        LATERAL_AUTODRIVE_MODE_AUTODRIVE = 2;
+        LATERAL_AUTODRIVE_MODE_OVERRIDE = 3;
+        LATERAL_AUTODRIVE_MODE_ERROR = 4;
+    }
+
+    enum LateralControlInterface {
+        LATERAL_CONTROL_INTERFACE_UNKNOWN = 0;
+        LATERAL_CONTROL_INTERFACE_STEERANGLE = 1;
+        LATERAL_CONTROL_INTERFACE_STEERTORQUE = 2;
+    }
+
+    enum LongitudinalControlInterface {
+        LONGITUDINAL_CONTROL_INTERFACE_UNKNOWN = 0;
+        LONGITUDINAL_CONTROL_INTERFACE_ACC = 1;
+        LONGITUDINAL_CONTROL_INTERFACE_ENGINETORQUE = 2;
+    }
+
+    optional LateralAutodriveMode lateral_autodrive_mode = 1;
+    optional LateralControlInterface lateral_control_interface = 2;
+    optional LongitudinalControlInterface longitudinal_control_interface = 3;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message HumanControlInfo {
+    optional bool left_turn_switch_status = 1;
+    optional bool right_turn_switch_status = 2;
+    optional bool low_beam_switch_status = 3;
+    optional bool high_beam_switch_status = 4;
+    optional bool auto_lamp_switch_status = 5;
+    optional int32 wiper_switch_status = 6;
+    optional bool acc_on_off_switch_status = 7;
+    optional bool acc_cancel_switch_status = 8;
+    optional bool acc_increase_switch_status = 9;
+    optional bool acc_decrease_switch_status = 10;
+    optional bool acc_timegap_switch_status = 11;
+    optional bool brake_pedal_status = 12;
+    optional bool acc_pedal_override = 13;
+    optional int32 button_id = 14;
+    optional bool driver_input_torque_valid = 15;
+    optional double driver_input_torque = 16;
+    optional double accel_act_pos = 17;
+    optional int32 acc_dist_switch_status = 18;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message ChassisDriverStatus {
+    optional bool hands_off_status = 1;
+    optional bool seatbelt_status = 2;
+    optional bool crash_status = 3;
+    optional int32 autodrive_on_off_status = 4;
+}
+
+/* @brief:
+ * @author:optional 
+ * @note:
+ */
+message ChassisFaultStatus {
+    optional bool esp_valid = 1;
+    optional bool eps_valid = 2;
+    optional bool epb_validoptional = 3;
+    optional bool eps_calibration = 4;
+    optional bool brake_pedal_valid = 5;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message ChassisFunctionStatus {
+    optional bool epb_active = 1;
+    optional bool abs_active = 2;
+    optional bool tcs_active = 3;
+    optional bool vdc_activeoptional = 4; 
+    optional bool elk_active = 5;
+    optional bool aeb_active = 6;
+    optional bool hdc_active = 7;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+enum PowerModeType {
+    POWER_MODE_TYPE_OFF = 0;
+    POWER_MODE_TYPE_ACC = 1;
+    POWER_MODE_TYPE_ON = 2;
+    POWER_MODE_TYPE_CRANK = 3;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message ChassisSensorStatus {
+    enum Wiper{
+        WIPER_OFF = 0;
+        WIPER_ON_LOW = 1;
+        WIPER_ON_HIGH = 2;
+        WIPER_ON_AUTO = 3;
+    }
+
+    optional Wiper wdw_screen_wiper_status = 1;
+
+    optional bool middle_range_radar_valid = 2;
+    optional bool corner_radar_optional_valid = 3;
+    optional bool trunk_status = 4;
+    optional bool hood_status = 5;
+    repeated bool doors_status = 6;
+    repeated bool tires_pressure_status = 7;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message VehicleStatus {
+    optional VecSpeed vehicle_speed = 1;
+    optional SteeringWheel steering_wheel = 2;
+    optional SteeringTorque steering_torque = 3;
+    optional GearInfo gear_info = 4;
+    optional InertialInfo inertial_info = 5;
+    optional LampInfo lamp_info = 6;
+    optional EngineInfo engine_info = 7;
+    optional AutodriveStatusInfo autodrive_status_info = 8;
+    optional HumanControlInfo human_control_info = 9;
+
+    optional ChassisDriverStatus driver_status = 10;
+    optional ChassisFaultStatus chassis_fault_status = 11;
+    optional ChassisFunctionStatus chassis_function_status = 12;
+    optional ChassisSensorStatus chassis_sensor_status = 13;
+    optional PowerModeType power_mode_status = 14;
+}

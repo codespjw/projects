@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package pnc.control;
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message Header {
+  optional uint32 seq = 1;
+  optional uint64 time_stamp = 2; // nsecs
+  optional string frame_id = 3;
+  optional string module_name = 4;
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message TimeMetricHeader {
+    optional uint32 pipeline_source_id = 1;     // pipeline id，
+    optional uint64 pipeline_start_ts = 2;      // us，pipeline start time, usually sensor time
+    optional uint64 module_start_ts = 3;        // us，module start time
+    optional uint64 module_end_ts = 4;          // us，module end time
+}
+
+/* @brief:
+ * @author:
+ * @note:
+ */
+message PosePoint {
+  optional double x = 1;
+  optional double y = 2;
+  optional double z = 3;
+  optional double yaw = 4;
+  optional double pitch = 5;
+  optional double roll = 6;
+}
